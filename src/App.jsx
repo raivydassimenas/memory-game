@@ -1,4 +1,4 @@
-import { CardsDashboard } from './components/cards-dashboard';
+import CardsDashboard from './components/cards-dashboard';
 
 function App() {
 
