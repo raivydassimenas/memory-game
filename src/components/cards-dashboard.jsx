@@ -1,40 +1,32 @@
 import Card from "./card";
 import { useEffect, useState } from "react";
+import { GiphyFetch } from '@giphy/js-fetch-api';
+import "./../styles/cards-dashboard.css";
 
 export default function CardsDashboard() {
 
-  const [cards, setCards] = useState([]);
+  const gf = new GiphyFetch(process.env.REACT_APP_GIPHY_API_KEY);
+  const [gifs, setGifs] = useState([]);
+
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchGifs = async () => {
       try {
-        const response = await fetch("https://api.giphy.com/v2/emoji?api_key=bPQ50ksBMMgBJ0b1Tajdn50EH4IbXIMX&limit=10&offset=0");
-        const result = await response.json();
-        setCards(result.data);
+        const { data } = await gf.trending({ limit: 10 });
+        setGifs(data);
       } catch (error) {
-        console.log("Error fetching cards data", error);
+        console.error('Error fetching GIF:', error);
       }
     };
 
-    fetchData();
-    return () => {
-      console.log("CardsDashboard component is unmounted");
-    };
+    fetchGifs();
   }, []);
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-4">
-          <Card title="Card 1" body="This is card 1" />
-        </div>
-        <div className="col-md-4">
-          <Card title="Card 2" body="This is card 2" />
-        </div>
-        <div className="col-md-4">
-          <Card title="Card 3" body="This is card 3" />
-        </div>
-      </div>
+      {gifs.map((gif) => (
+        <Card key={gif.id} title={gif.title} image={gif.images.fixed_height.url} />
+      ))}
     </div>
   );
 }
