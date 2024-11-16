@@ -7,6 +7,9 @@ export default function CardsDashboard() {
 
   const gf = new GiphyFetch(process.env.REACT_APP_GIPHY_API_KEY);
   const [gifs, setGifs] = useState([]);
+  const [score, setScore] = useState(0);
+  const [targetCard, setTargetCard] = useState(null);
+  const [started, setStarted] = useState(false);
 
 
   useEffect(() => {
@@ -24,9 +27,14 @@ export default function CardsDashboard() {
 
   return (
     <div className="container">
+    <div className="cards-container">
       {gifs.map((gif) => (
         <Card key={gif.id} title={gif.title} image={gif.images.fixed_height.url} />
       ))}
+    </div>
+    <div className="button-container">
+      {started ? <button className="button" onClick={newGame}>New game</button> : <button className="button" onClick={resetGame}>Reset game</button>}
+    </div>
     </div>
   );
 }
