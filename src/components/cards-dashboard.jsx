@@ -31,6 +31,7 @@ export default function CardsDashboard() {
   }
 
   return (
+    <div className="dashboard">
     <div className="container">
     <div className="cards-container">
       {gifs.map((gif) => (
@@ -39,6 +40,8 @@ export default function CardsDashboard() {
     </div>
     <div className="button-container">
       <button className="button" onClick={resetGame}>Reset game</button>
+      <p className="score">Score: {score}</p>
+    </div>
     </div>
     </div>
   );
