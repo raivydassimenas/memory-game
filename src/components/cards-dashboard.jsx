@@ -30,12 +30,22 @@ export default function CardsDashboard() {
     setTargetCard(null);
   }
 
+  function clickCard(cardTitle) {
+    console.log('card clicked');
+    if (targetCard && cardTitle === targetCard) {
+      setScore(score + 1);
+    } else {
+      setScore(0);
+      setTargetCard(cardTitle)
+    }
+  }
+
   return (
     <div className="dashboard">
     <div className="container">
     <div className="cards-container">
       {gifs.map((gif) => (
-        <Card key={gif.id} title={gif.title} image={gif.images.fixed_height.url} />
+        <Card onClick={() => clickCard(gif.title)} key={gif.id} title={gif.title} image={gif.images.fixed_height.url} />
       ))}
     </div>
     <div className="button-container">
