@@ -8,6 +8,7 @@ export default function CardsDashboard() {
   const [gifs, setGifs] = useState([]);
   const [visited, setVisited] = useState([]);
   const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
   function shuffleArray(array) {
     const shuffledArray = [...array];
@@ -42,8 +43,12 @@ export default function CardsDashboard() {
   function clickCard(cardTitle) {
     console.log("card clicked");
     if (!visited.includes(cardTitle)) {
-      setScore(score + 1);
-      if (score === 10) {
+      const newScore = score + 1;
+      setScore(newScore);
+      if (newScore > highScore) {
+        setHighScore(newScore);
+      }
+      if (newScore === 10) {
         alert("You won!");
         resetGame();
       } else {
@@ -74,6 +79,7 @@ export default function CardsDashboard() {
             Reset game
           </button>
           <p className="score">Score: {score}</p>
+          <p className="score">High score: {highScore}</p>
         </div>
       </div>
     </div>
